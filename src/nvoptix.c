@@ -39,8 +39,6 @@ WINE_DEFAULT_DEBUG_CHANNEL(nvoptix);
 static void *libnvoptix_handle = NULL;
 static OptixResult (*poptixQueryFunctionTable)(int abiId, unsigned int numOptions, void *optionKeys, const void **optionValues, void *functionTable, size_t sizeOfTable) = NULL;
 
-#define OPTIX_MAX_ABI_VERSION 55
-
 #include "nvoptix_55.h"
 #include "nvoptix_47.h"
 #include "nvoptix_41.h"
@@ -1389,6 +1387,7 @@ static OptixResult __cdecl optixDenoiserComputeIntensity_22(OptixDenoiser handle
 /* OptiX ABI = 55 / SDK 7.4.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_55(
+    int abiId,
     unsigned int numOptions,
     int* optionKeys,
     const void** optionValues,
@@ -1397,7 +1396,7 @@ static OptixResult __cdecl optixQueryFunctionTable_55(
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_55)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
-    OptixResult result = poptixQueryFunctionTable(55, numOptions, optionKeys, optionValues, &optixFunctionTable_55, sizeOfTable);
+    OptixResult result = poptixQueryFunctionTable(abiId, numOptions, optionKeys, optionValues, &optixFunctionTable_55, sizeOfTable);
 
     if (result != OPTIX_SUCCESS) return result;
 
@@ -1457,6 +1456,7 @@ static OptixResult __cdecl optixQueryFunctionTable_55(
 /* OptiX ABI = 47 / SDK 7.3.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_47(
+    int abiId,
     unsigned int numOptions,
     int* optionKeys,
     const void** optionValues,
@@ -1465,7 +1465,7 @@ static OptixResult __cdecl optixQueryFunctionTable_47(
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_47)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
-    OptixResult result = poptixQueryFunctionTable(47, numOptions, optionKeys, optionValues, &optixFunctionTable_47, sizeOfTable);
+    OptixResult result = poptixQueryFunctionTable(abiId, numOptions, optionKeys, optionValues, &optixFunctionTable_47, sizeOfTable);
 
     if (result != OPTIX_SUCCESS) return result;
 
@@ -1520,6 +1520,7 @@ static OptixResult __cdecl optixQueryFunctionTable_47(
 /* OptiX ABI = 41 / SDK 7.2.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_41(
+    int abiId,
     unsigned int numOptions,
     int* optionKeys,
     const void** optionValues,
@@ -1528,7 +1529,7 @@ static OptixResult __cdecl optixQueryFunctionTable_41(
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_41)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
-    OptixResult result = poptixQueryFunctionTable(41, numOptions, optionKeys, optionValues, &optixFunctionTable_41, sizeOfTable);
+    OptixResult result = poptixQueryFunctionTable(abiId, numOptions, optionKeys, optionValues, &optixFunctionTable_41, sizeOfTable);
 
     if (result != OPTIX_SUCCESS) return result;
 
@@ -1583,6 +1584,7 @@ static OptixResult __cdecl optixQueryFunctionTable_41(
 /* OptiX ABI = 36 / SDK 7.1.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_36(
+    int abiId,
     unsigned int numOptions,
     int* optionKeys,
     const void** optionValues,
@@ -1591,7 +1593,7 @@ static OptixResult __cdecl optixQueryFunctionTable_36(
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_36)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
-    OptixResult result = poptixQueryFunctionTable(36, numOptions, optionKeys, optionValues, &optixFunctionTable_36, sizeOfTable);
+    OptixResult result = poptixQueryFunctionTable(abiId, numOptions, optionKeys, optionValues, &optixFunctionTable_36, sizeOfTable);
 
     if (result != OPTIX_SUCCESS) return result;
 
@@ -1645,6 +1647,7 @@ static OptixResult __cdecl optixQueryFunctionTable_36(
 /* OptiX ABI = 22 / SDK 7.0.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_22(
+    int abiId,
     unsigned int numOptions,
     int* optionKeys,
     const void** optionValues,
@@ -1653,7 +1656,7 @@ static OptixResult __cdecl optixQueryFunctionTable_22(
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_22)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
-    OptixResult result = poptixQueryFunctionTable(22, numOptions, optionKeys, optionValues, &optixFunctionTable_22, sizeOfTable);
+    OptixResult result = poptixQueryFunctionTable(abiId, numOptions, optionKeys, optionValues, &optixFunctionTable_22, sizeOfTable);
 
     if (result != OPTIX_SUCCESS) return result;
 
@@ -1727,11 +1730,6 @@ OptixResult __cdecl optixQueryFunctionTable(
     {
         return OPTIX_ERROR_ENTRY_SYMBOL_NOT_FOUND;
     }
-    else if (abiId > OPTIX_MAX_ABI_VERSION)
-    {
-        ERR("abiId = %d > %d not supported\n", abiId, OPTIX_MAX_ABI_VERSION);
-        return OPTIX_ERROR_UNSUPPORTED_ABI_VERSION;
-    }
     else if (sizeOfTable > sizeof(OptixFunctionTable_55))
     {
         ERR("sizeOfTable = %zu > %zu not supported\n", sizeOfTable, sizeof(OptixFunctionTable_55));
@@ -1741,19 +1739,37 @@ OptixResult __cdecl optixQueryFunctionTable(
     switch (abiId)
     {
         case 55:
-            return optixQueryFunctionTable_55(numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+            return optixQueryFunctionTable_55(55, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
         case 47:
-            return optixQueryFunctionTable_47(numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+            return optixQueryFunctionTable_47(47, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
         case 41:
-            return optixQueryFunctionTable_41(numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+            return optixQueryFunctionTable_41(41, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
         case 36:
-            return optixQueryFunctionTable_36(numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+            return optixQueryFunctionTable_36(36, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
         case 22:
-            return optixQueryFunctionTable_22(numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
-        default:
-            ERR("abiId = %d not supported\n", abiId);
-            return OPTIX_ERROR_UNSUPPORTED_ABI_VERSION;
+            return optixQueryFunctionTable_22(22, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
     }
+
+    WARN("abiId = %d not known, attempting to match by table size; expect problems\n", abiId);
+
+    switch (sizeOfTable)
+    {
+        case sizeof(OptixFunctionTable_55):
+            return optixQueryFunctionTable_55(abiId, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+        case 304: // 47 and 41 have equal table sizes
+            if (abiId > 47)
+                return optixQueryFunctionTable_47(abiId, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+            if (abiId < 41)
+                return optixQueryFunctionTable_41(abiId, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+            break;
+        case sizeof(OptixFunctionTable_36):
+            return optixQueryFunctionTable_36(abiId, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+        case sizeof(OptixFunctionTable_22):
+            return optixQueryFunctionTable_22(abiId, numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
+    }
+
+    ERR("abiId = %d with sizeOfTable = %zu not supported\n", abiId, sizeOfTable);
+    return OPTIX_ERROR_UNSUPPORTED_ABI_VERSION;
 }
 
 int __cdecl rtGetSymbolTable()
