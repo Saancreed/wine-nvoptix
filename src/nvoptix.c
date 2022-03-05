@@ -1209,11 +1209,11 @@ static OptixResult __cdecl optixQueryFunctionTable_55(
 /* OptiX ABI = 47 / SDK 7.3.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_47(
-        unsigned int numOptions,
-        int* optionKeys,
-        const void** optionValues,
-        void* functionTable,
-        size_t sizeOfTable)
+    unsigned int numOptions,
+    int* optionKeys,
+    const void** optionValues,
+    void* functionTable,
+    size_t sizeOfTable)
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_47)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
@@ -1272,11 +1272,11 @@ static OptixResult __cdecl optixQueryFunctionTable_47(
 /* OptiX ABI = 41 / SDK 7.2.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_41(
-        unsigned int numOptions,
-        int* optionKeys,
-        const void** optionValues,
-        void* functionTable,
-        size_t sizeOfTable)
+    unsigned int numOptions,
+    int* optionKeys,
+    const void** optionValues,
+    void* functionTable,
+    size_t sizeOfTable)
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_41)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
@@ -1335,11 +1335,11 @@ static OptixResult __cdecl optixQueryFunctionTable_41(
 /* OptiX ABI = 36 / SDK 7.1.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_36(
-        unsigned int numOptions,
-        int* optionKeys,
-        const void** optionValues,
-        void* functionTable,
-        size_t sizeOfTable)
+    unsigned int numOptions,
+    int* optionKeys,
+    const void** optionValues,
+    void* functionTable,
+    size_t sizeOfTable)
 {
     if (sizeOfTable != sizeof(OptixFunctionTable_36)) return OPTIX_ERROR_FUNCTION_TABLE_SIZE_MISMATCH;
 
