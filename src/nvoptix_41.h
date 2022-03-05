@@ -23,8 +23,6 @@
 #include "nvoptix_types.h"
 #include <stddef.h>
 
-// defensive duplicate of OptixDeviceContextOptions because I have to modify it
-
 typedef void (*OptixLogCallback_41)(unsigned int level, const char *tag, const char *message, void *cbdata);
 
 typedef struct OptixDeviceContextOptions_41
@@ -34,8 +32,6 @@ typedef struct OptixDeviceContextOptions_41
     int logCallbackLevel;
     int validationMode;
 } OptixDeviceContextOptions_41;
-
-// table as in public docs but stripped of most structures (pointers to which have been replaced with opaque `void*`)
 
 typedef struct OptixFunctionTable_41
 {

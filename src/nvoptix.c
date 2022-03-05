@@ -41,8 +41,6 @@ static OptixResult (*poptixQueryFunctionTable)(int abiId, unsigned int numOption
 
 #define OPTIX_MAX_ABI_VERSION 55
 
-// TODO: repeat for each ABI version, using OptixFunctionTable from appropriate SDK
-
 #include "nvoptix_55.h"
 #include "nvoptix_47.h"
 #include "nvoptix_41.h"
@@ -52,8 +50,6 @@ static OptixFunctionTable_55 optixFunctionTable_55;
 static OptixFunctionTable_47 optixFunctionTable_47;
 static OptixFunctionTable_41 optixFunctionTable_41;
 static OptixFunctionTable_36 optixFunctionTable_36;
-
-// TODO: duplicate functions below for each ABI version, calling into optixFunctionTable_X instead
 
 /* OptiX ABI = 55 / SDK 7.4.0 */
 
@@ -1136,8 +1132,6 @@ static OptixResult __cdecl optixDenoiserComputeIntensity_36(OptixDenoiser handle
 }
 
 
-// TODO: duplicate for each ABI version
-
 /* OptiX ABI = 55 / SDK 7.4.0 */
 
 static OptixResult __cdecl optixQueryFunctionTable_55(
@@ -1431,7 +1425,6 @@ OptixResult __cdecl optixQueryFunctionTable(
 
     switch (abiId)
     {
-        // TODO: add other ABI versions here
         case 55:
             return optixQueryFunctionTable_55(numOptions, optionKeys, optionValues, functionTable, sizeOfTable);
         case 47:
